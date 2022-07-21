@@ -17,7 +17,7 @@ from multiprocessing import Pool
 """
 
 token = "<access_token>" # access_token
-workingPath = "/path/to/working/folder/"; # Important! Make sure this ends with a backslash
+workingPath = "C:\\Temp\\canvas\\exported\\"; # Important! Make sure this ends with a backslash
 CSVFileName = "csvfile.csv" # The name of the course copy CSV file.  Not the full path
 
 source_archive_filename_column = "source_filename"
@@ -65,11 +65,15 @@ migration_url_field = 'export_url'
 # I think I should be able to read the field names from the first line
 # of the file.  That is assuming the file has headers.  It should always have them.
 # fieldnames that will exist in the csv file
+logPath = os.path.join(workingPath, "logs")
+timestamp = time.strftime("%y_%m_%d_%h")
+logFilePath = os.path.join(logPath,timestamp + ".log")
+logfile = open(logFilePath,'w+')
 
 def _o(_str):
   if _str and debug:
     logfile.write(_str)
-  print _str
+  print (_str)
 
 debug=True
 
@@ -81,7 +85,7 @@ except:
     def __init__(self,*args,**kwargs):
       self.label = kwargs.get('label','')
     def show(self,idx):
-      print "{0.label} {1}% done".format(self,idx)
+      print ("{0.label} {1}% done").format(self,idx)
 
     @property
     def label(self):
@@ -89,7 +93,7 @@ except:
 
     @label.setter
     def label(self, value):
-      print value
+      print(value)
       self._label = value
 
 # Try loading local config variables from a file called local_config.py.  This file will

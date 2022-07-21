@@ -14,17 +14,17 @@ import time
 import pprint
 
 # Change this to contain your access token
-canvas_domain = "changeme.instructure.com" # i.e. something like schoolname.instructure.com
+canvas_domain = "yourdomain.instructure.com" # i.e. something like schoolname.instructure.com
 canvas_token = 'canvas_access_token'
 
 # Set this to the full path of the file that contains the list of ocurses to migrate.
 # This file should have at least one column called course_id.  This column should
 # contain the canvas course id's or sis id's (prefixed with sis_course_id:)
-course_input_file = '/Users/kevin/dev/canvas-contrib/API_Examples/bulk_course_export/python/courses.in.csv'
+course_input_file = 'C:\\Temp\\canvas\\api\\bulk_course_export\\python\\courses.in.csv'
 
 # Set this to the full path of the output CSV file that will be created after doing
 # the bulk exports for the list of courses
-course_output_file = '/Users/kevin/dev/canvas-contrib/API_Examples/bulk_course_export/python/courses.out.csv'
+course_output_file = 'C:\\Temp\\canvas\\api\\bulk_course_export\\python\\courses.out.csv'
 
 course_id_field = 'course_id'
 
@@ -43,7 +43,7 @@ except:
     def __init__(self,*args,**kwargs):
       self.label = kwargs.get('label','')
     def show(self,idx):
-      print "{0.label} {1}% done".format(self,idx)
+      print ("{0.label} {1}% done").format(self,idx)
 
     @property
     def label(self):
@@ -51,13 +51,13 @@ except:
 
     @label.setter
     def label(self, value):
-      print value
+      print(value)
       self._label = value
 
 try:
   from local_config import *
 except:
-  print 'local config file not found'
+  print ('local config file not found')
   pass
 
 config =dict (
@@ -75,7 +75,7 @@ def course_export(course):
       }
   try:
     res = requests.post(url,data=params,headers=config['headers']).json()
-  except Exception, err:
+  except Exception as err:
     res = False
   return (course,res)
 
@@ -103,7 +103,7 @@ def course_exports(course_list):
       if not url:
         del(export_list[idx])
 
-        print 'not able to generate export for course',course
+        print ('not able to generate export for course'),course
       else:
         download_progress = requests.get(url,headers=config['headers']).json()
 
@@ -137,7 +137,7 @@ def local_prep_row(row):
 
 if __name__ == '__main__':
   course_output_fields = ('course_id','export_url')
-  with open(course_input_file,'rU') as uf, open(course_output_file,'w+') as cw:
+  with open(course_input_file,'r') as uf, open(course_output_file,'w+') as cw:
     cw = csv.DictWriter(cw,fieldnames=course_output_fields,extrasaction='ignore')
     cw.writeheader()
 
@@ -147,4 +147,4 @@ if __name__ == '__main__':
       cw.writerow(row)
     #  do_import(row)
 
-  print 'all done'
+  print ('all done')
