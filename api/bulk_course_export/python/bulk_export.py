@@ -54,11 +54,11 @@ except:
       print(value)
       self._label = value
 
-try:
-  from local_config import *
-except:
-  print ('local config file not found')
-  pass
+# try:
+#   from local_config import *
+# except:
+#   print ('local config file not found')
+#   pass
 
 config =dict (
     headers = {'Authorization':'Bearer {0}'.format(canvas_token)},
